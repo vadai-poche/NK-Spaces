@@ -40,7 +40,6 @@ export const projectMeta: Record<string, ProjectMeta> = {
     ],
     featured: true,
     order: 1,
-    balconyIndices: [15, 16],
   },
   P1205: {
     slug: 'residence-2',

@@ -4,6 +4,7 @@ import { getSiteSettings } from '../lib/content';
 const settings = await getSiteSettings();
 const telHref = `tel:${settings.phone.replace(/\s+/g, '')}`;
 const waHref = `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent("Hi NK Spaces, I'd like to discuss a project.")}`;
+const instaUrl = settings.socials.find((s) => s.label.toLowerCase() === 'instagram')?.url;
 ---
 
 <Layout title="Contact" description={`Get in touch with ${settings.name} to discuss your project.`}>
@@ -28,6 +29,25 @@ const waHref = `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent("Hi
             Chat on WhatsApp
           </a>
         </div>
+        {instaUrl && (
+          <div class="mt-8">
+            <p class="text-sm uppercase tracking-widest text-muted">Follow on Instagram</p>
+            <a href={instaUrl} target="_blank" rel="noopener" class="mt-3 inline-block">
+              <img
+                src="/insta-qr.webp"
+                alt="Scan to follow NK Spaces on Instagram"
+                width="160"
+                height="160"
+                class="h-40 w-40 rounded-xl shadow-sm"
+              />
+            </a>
+            <p class="mt-2 text-sm">
+              <a href={instaUrl} target="_blank" rel="noopener" class="text-ink hover:text-clay">@nkspaces.in</a>
+              <span class="text-muted"> — scan or tap to follow</span>
+            </p>
+          </div>
+        )}
+
         <p class="mt-8 text-sm text-muted">Serving {settings.serviceArea}</p>
       </div>
 

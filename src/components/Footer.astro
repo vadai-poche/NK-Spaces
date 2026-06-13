@@ -1,0 +1,39 @@
+---
+import { getSiteSettings } from '../lib/content';
+const settings = await getSiteSettings();
+const year = new Date().getFullYear();
+const telHref = `tel:${settings.phone.replace(/\s+/g, '')}`;
+const waHref = `https://wa.me/${settings.whatsapp}`;
+---
+
+<footer class="mt-24 border-t border-sand bg-sand/40">
+  <div class="container-x grid gap-10 py-14 md:grid-cols-3">
+    <div>
+      <p class="font-serif text-2xl text-ink">{settings.name}</p>
+      <p class="mt-2 max-w-xs text-sm text-muted">{settings.tagline}</p>
+      <p class="mt-4 text-sm text-muted">{settings.serviceArea}</p>
+    </div>
+
+    <div class="text-sm">
+      <p class="mb-3 uppercase tracking-widest text-ink/70">Get in touch</p>
+      <ul class="space-y-2 text-muted">
+        <li><a class="hover:text-clay" href={telHref}>{settings.phone}</a></li>
+        <li><a class="hover:text-clay" href={`mailto:${settings.email}`}>{settings.email}</a></li>
+        <li><a class="hover:text-clay" href={waHref}>WhatsApp</a></li>
+      </ul>
+    </div>
+
+    <div class="text-sm">
+      <p class="mb-3 uppercase tracking-widest text-ink/70">Follow</p>
+      <ul class="space-y-2 text-muted">
+        {settings.socials.map((s) => (
+          <li><a class="hover:text-clay" href={s.url} target="_blank" rel="noopener">{s.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-x border-t border-sand/70 py-6 text-xs text-muted">
+    © {year} {settings.name}. All rights reserved.
+  </div>
+</footer>

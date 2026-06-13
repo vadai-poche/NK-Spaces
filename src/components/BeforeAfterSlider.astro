@@ -1,0 +1,100 @@
+---
+interface Props {
+  before: string;
+  after: string;
+  alt?: string;
+}
+const { before, after, alt = 'Before and after comparison' } = Astro.props;
+const id = `ba-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div class="ba" data-ba id={id}>
+  <div class="ba-frame">
+    <!-- After (full, underneath) -->
+    <img src={after} alt={`${alt} — after`} class="ba-img" draggable="false" />
+    <!-- Before (clipped on top) -->
+    <div class="ba-before" data-ba-before>
+      <img src={before} alt={`${alt} — before`} class="ba-img" draggable="false" />
+    </div>
+
+    <span class="ba-tag ba-tag-before">Before</span>
+    <span class="ba-tag ba-tag-after">After</span>
+
+    <div class="ba-handle" data-ba-handle aria-hidden="true">
+      <span class="ba-line"></span>
+      <span class="ba-knob">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 6 9 12 15 18" /><polyline points="9 6 3 12 9 18" transform="translate(12)" />
+        </svg>
+      </span>
+    </div>
+
+    <input
+      type="range" min="0" max="100" value="50"
+      class="ba-range" data-ba-range
+      aria-label="Drag to compare before and after"
+    />
+  </div>
+</div>
+
+<style>
+  .ba { width: 100%; }
+  .ba-frame { position: relative; overflow: hidden; border-radius: 0.5rem; user-select: none; }
+  .ba-img { display: block; width: 100%; height: auto; pointer-events: none; }
+  .ba-before {
+    position: absolute; inset: 0; width: 50%; overflow: hidden;
+    border-right: 2px solid white;
+  }
+  .ba-before .ba-img { width: 100vw; max-width: none; height: 100%; object-fit: cover; }
+  /* Match before image width to the frame so it doesn't distort */
+  .ba-frame { --w: 100%; }
+
+  .ba-tag {
+    position: absolute; top: 0.75rem; z-index: 3;
+    background: rgba(28,26,23,0.7); color: #f7f4ef;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.25rem 0.6rem; border-radius: 999px;
+  }
+  .ba-tag-before { left: 0.75rem; }
+  .ba-tag-after { right: 0.75rem; }
+
+  .ba-handle {
+    position: absolute; top: 0; bottom: 0; left: 50%; z-index: 4;
+    transform: translateX(-50%); pointer-events: none;
+  }
+  .ba-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: white; transform: translateX(-50%); }
+  .ba-knob {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 2.5rem; height: 2.5rem; border-radius: 999px;
+    background: white; color: #1c1a17; display: grid; place-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+  }
+  .ba-range {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    margin: 0; opacity: 0; cursor: ew-resize; z-index: 5;
+  }
+</style>
+
+<script>
+  function initBeforeAfter(el: HTMLElement) {
+    const range = el.querySelector<HTMLInputElement>('[data-ba-range]');
+    const before = el.querySelector<HTMLElement>('[data-ba-before]');
+    const handle = el.querySelector<HTMLElement>('[data-ba-handle]');
+    const frame = el.querySelector<HTMLElement>('.ba-frame');
+    const beforeImg = before?.querySelector<HTMLImageElement>('.ba-img');
+    if (!range || !before || !handle || !frame || !beforeImg) return;
+
+    const sync = () => {
+      const pct = Number(range.value);
+      before.style.width = `${pct}%`;
+      handle.style.left = `${pct}%`;
+      // keep the before image the same rendered width as the frame
+      beforeImg.style.width = `${frame.clientWidth}px`;
+    };
+    range.addEventListener('input', sync);
+    window.addEventListener('resize', sync);
+    sync();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-ba]').forEach(initBeforeAfter);
+</script>

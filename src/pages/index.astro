@@ -1,0 +1,164 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Carousel from '../components/Carousel.astro';
+import { getSiteSettings, getProjects, getArtworks, getPaintings, getBalconyImages } from '../lib/content';
+
+const settings = await getSiteSettings();
+const all = await getProjects();
+const fullInteriors = all.filter((p) => p.group !== 'makeover');
+const makeovers = all.filter((p) => p.group === 'makeover');
+const balconyImages = getBalconyImages();
+const artworks = await getArtworks();
+const resinImages = (artworks[0]?.gallery ?? [])
+  .slice(0, 5)
+  .map((g) => ({ src: typeof g.src === 'string' ? g.src : '', alt: g.alt }));
+const paintings = await getPaintings();
+const paintingImages = paintings
+  .flatMap((a) => a.gallery)
+  .slice(0, 5)
+  .map((g) => ({ src: typeof g.src === 'string' ? g.src : '', alt: g.alt }));
+// Hero: explicit heroImage from settings, else the lead project's first photo.
+const heroImg = (typeof settings.heroImage === 'string' ? settings.heroImage : undefined)
+  ?? (all[0]?.gallery[0]?.src as string | undefined);
+---
+
+<Layout>
+  <!-- Hero -->
+  <section class="relative">
+    <div class="relative h-[78vh] min-h-[480px] w-full overflow-hidden">
+      {heroImg && (
+        <img src={heroImg} alt="NK Spaces interior" class="h-full w-full object-cover" />
+      )}
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/20 to-ink/30"></div>
+      <div class="container-x absolute inset-0 flex flex-col items-start justify-end pb-16 text-cream">
+        <p class="text-sm uppercase tracking-[0.25em] text-cream/80">{settings.name}</p>
+        <h1 class="mt-3 max-w-3xl text-4xl leading-tight md:text-6xl">{settings.tagline}</h1>
+        <div class="mt-7 flex gap-4">
+          <a href="/projects" class="rounded-full bg-cream px-6 py-3 text-sm uppercase tracking-widest text-ink transition hover:bg-clay hover:text-cream">View Projects</a>
+          <a href="/contact" class="rounded-full border border-cream/70 px-6 py-3 text-sm uppercase tracking-widest text-cream transition hover:bg-cream hover:text-ink">Enquire</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About teaser -->
+  <section class="container-x py-20">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="text-sm uppercase tracking-[0.25em] text-clay">About</p>
+      <p class="mt-5 font-serif text-2xl leading-relaxed text-ink md:text-3xl">{settings.aboutHeadline}</p>
+      <p class="mt-6 text-muted">{settings.about[1]}</p>
+      <a href="/about" class="mt-7 inline-block text-sm uppercase tracking-widest text-clay hover:text-clay-dark">Meet {settings.founder} →</a>
+    </div>
+  </section>
+
+  <!-- What we do -->
+  <section class="border-y border-sand bg-sand/30">
+    <div class="container-x py-20">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="text-sm uppercase tracking-[0.25em] text-clay">What we do</p>
+        <h2 class="mt-3 text-3xl md:text-4xl">Spaces and art, made personal</h2>
+        <p class="mt-5 text-muted">
+          From full interiors and makeovers to handcrafted resin art and paintings — every project is
+          designed around how you live, with a personal touch in every detail.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <h3 class="font-serif text-xl text-ink">Interior Design</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">Full-home interiors tailored to your needs — nothing off-the-shelf, every space designed around you.</p>
+        </div>
+        <div>
+          <h3 class="font-serif text-xl text-ink">Makeovers</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">Refreshing and restyling existing rooms and balconies to give them new life.</p>
+        </div>
+        <div>
+          <h3 class="font-serif text-xl text-ink">Custom Resin Art</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">One-of-a-kind handcrafted resin pieces, made to order in sizes and palettes that suit your home.</p>
+        </div>
+        <div>
+          <h3 class="font-serif text-xl text-ink">Paintings</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">Original paintings to bring colour, character, and a personal story to your walls.</p>
+        </div>
+      </div>
+
+      <p class="mx-auto mt-12 max-w-2xl text-center text-sm leading-relaxed text-muted">
+        Designs are reworked as often as you like — we don’t charge a fee for design changes.
+        Any reworking of items already made or changes to existing structure are simply charged at actuals.
+      </p>
+    </div>
+  </section>
+
+  <!-- Full Interiors -->
+  <section class="container-x pb-16 pt-16">
+    <div class="mb-10 flex items-end justify-between">
+      <h2 class="text-3xl md:text-4xl">Full Interiors</h2>
+      <a href="/projects" class="text-sm uppercase tracking-widest text-muted hover:text-clay">All projects →</a>
+    </div>
+    <div class="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+      {fullInteriors.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </section>
+
+  <!-- Makeovers -->
+  {makeovers.length > 0 && (
+    <section class="container-x pb-16">
+      <div class="mb-10 max-w-2xl">
+        <h2 class="text-3xl md:text-4xl">Makeovers</h2>
+        <p class="mt-3 text-muted">Refreshing and restyling existing spaces — new life, same walls.</p>
+      </div>
+      <div class="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {makeovers.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </section>
+  )}
+
+  <!-- Balcony Makeover -->
+  {balconyImages.length > 0 && (
+    <section class="container-x pb-16">
+      <div class="mb-8 max-w-2xl">
+        <h2 class="text-3xl md:text-4xl">Balcony Makeover</h2>
+        <p class="mt-3 text-muted">Turning overlooked balconies into favourite corners — across our projects.</p>
+      </div>
+      <Carousel images={balconyImages} />
+    </section>
+  )}
+
+  <!-- Resin Art -->
+  {resinImages.length > 0 && (
+    <section class="container-x pb-16">
+      <div class="mb-8 flex items-end justify-between">
+        <div class="max-w-2xl">
+          <h2 class="text-3xl md:text-4xl">Resin Art &amp; Paintings</h2>
+          <p class="mt-3 text-muted">Handcrafted, one-of-a-kind pieces — original works and custom commissions.</p>
+        </div>
+        <a href="/resin-art" class="text-sm uppercase tracking-widest text-muted hover:text-clay">View all →</a>
+      </div>
+      <Carousel images={resinImages} interval={3500} />
+    </section>
+  )}
+
+  <!-- Paintings -->
+  {paintingImages.length > 0 && (
+    <section class="container-x pb-16">
+      <div class="mb-8 flex items-end justify-between">
+        <div class="max-w-2xl">
+          <h2 class="text-3xl md:text-4xl">Paintings</h2>
+          <p class="mt-3 text-muted">Original, hand-painted works to bring colour and character to your walls.</p>
+        </div>
+        <a href="/paintings" class="text-sm uppercase tracking-widest text-muted hover:text-clay">View all →</a>
+      </div>
+      <Carousel images={paintingImages} interval={3500} />
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="container-x py-20">
+    <div class="rounded-2xl bg-ink px-8 py-14 text-center text-cream">
+      <h2 class="text-3xl md:text-4xl">Have a space in mind?</h2>
+      <p class="mx-auto mt-4 max-w-xl text-cream/80">Tell us about your home or project and we’ll be in touch to discuss how we can bring your vision to life.</p>
+      <a href="/contact" class="mt-8 inline-block rounded-full bg-cream px-7 py-3 text-sm uppercase tracking-widest text-ink transition hover:bg-clay hover:text-cream">Start a conversation</a>
+    </div>
+  </section>
+</Layout>

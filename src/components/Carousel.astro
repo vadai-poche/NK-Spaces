@@ -1,0 +1,101 @@
+---
+// Auto-advancing, selectable image carousel. Pure CSS scroll-snap + a small script.
+// Used on the home page (Balcony Makeover, Resin Art). Supports multiple instances.
+interface Props {
+  images: { src: string; alt: string }[];
+  interval?: number; // autoplay ms
+}
+const { images, interval = 4000 } = Astro.props;
+---
+
+<div class="group relative" data-carousel data-interval={interval}>
+  <div
+    class="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth rounded-xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    data-track
+  >
+    {images.map((im) => (
+      <div class="relative aspect-[16/10] w-full shrink-0 basis-full snap-center overflow-hidden rounded-xl bg-sand sm:basis-[85%] lg:basis-[70%]" data-slide>
+        <img src={im.src} alt={im.alt} loading="lazy" class="h-full w-full object-cover" />
+      </div>
+    ))}
+  </div>
+
+  {images.length > 1 && (
+    <>
+      <button
+        type="button"
+        data-prev
+        aria-label="Previous"
+        class="absolute left-2 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-cream/80 text-ink opacity-0 shadow transition group-hover:opacity-100 hover:bg-cream"
+      >‹</button>
+      <button
+        type="button"
+        data-next
+        aria-label="Next"
+        class="absolute right-2 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-cream/80 text-ink opacity-0 shadow transition group-hover:opacity-100 hover:bg-cream"
+      >›</button>
+
+      <div class="mt-4 flex justify-center gap-2" data-dots>
+        {images.map((_, i) => (
+          <button
+            type="button"
+            data-dot={i}
+            aria-label={`Go to image ${i + 1}`}
+            class="h-2.5 w-2.5 rounded-full bg-sand transition aria-[current=true]:w-6 aria-[current=true]:bg-clay"
+          ></button>
+        ))}
+      </div>
+    </>
+  )}
+</div>
+
+<script>
+  function initCarousel(root: HTMLElement) {
+    const track = root.querySelector<HTMLElement>('[data-track]');
+    if (!track) return;
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('[data-slide]'));
+    const dots = Array.from(root.querySelectorAll<HTMLElement>('[data-dot]'));
+    const interval = Number(root.dataset.interval) || 4000;
+    if (slides.length < 2) return;
+
+    let current = 0;
+    let timer: ReturnType<typeof setInterval> | undefined;
+
+    const go = (i: number) => {
+      current = (i + slides.length) % slides.length;
+      track.scrollTo({ left: slides[current].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      dots.forEach((d, di) => d.setAttribute('aria-current', String(di === current)));
+    };
+
+    const start = () => { stop(); timer = setInterval(() => go(current + 1), interval); };
+    const stop = () => { if (timer) clearInterval(timer); };
+
+    dots.forEach((d, di) => d.addEventListener('click', () => { go(di); start(); }));
+    root.querySelector('[data-next]')?.addEventListener('click', () => { go(current + 1); start(); });
+    root.querySelector('[data-prev]')?.addEventListener('click', () => { go(current - 1); start(); });
+
+    // keep dots in sync when the user scrolls/swipes manually
+    let raf = 0;
+    track.addEventListener('scroll', () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const center = track.scrollLeft + track.clientWidth / 2;
+        let nearest = 0, best = Infinity;
+        slides.forEach((s, si) => {
+          const c = s.offsetLeft + s.clientWidth / 2 - track.offsetLeft;
+          const dist = Math.abs(c - center);
+          if (dist < best) { best = dist; nearest = si; }
+        });
+        current = nearest;
+        dots.forEach((d, di) => d.setAttribute('aria-current', String(di === current)));
+      });
+    });
+
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    go(0);
+    start();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach(initCarousel);
+</script>

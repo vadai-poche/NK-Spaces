@@ -1,0 +1,32 @@
+# build output
+dist/
+.output/
+
+# dependencies
+node_modules/
+
+# astro
+.astro/
+
+# environment
+.env
+.env.production
+.env.*.local
+
+# logs
+*.log
+npm-debug.log*
+
+# os
+.DS_Store
+Thumbs.db
+
+# raw photo originals (large HEIC/JPG/MP4). The optimized web versions in
+# public/projects/ are committed and are what gets deployed. Keep a separate
+# backup of this folder — it is the source for `npm run images`.
+Projects/
+# raw working sets dropped in for processing (source for scripts/apply-updated.mjs)
+Updated_images/
+
+# Local Netlify folder
+.netlify

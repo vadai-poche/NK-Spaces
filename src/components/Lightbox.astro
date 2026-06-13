@@ -1,0 +1,109 @@
+---
+// A clickable image gallery (horizontal grid) with a full-screen lightbox:
+// click any photo to view it large, then move left/right through the whole set.
+// Pure CSS + a small script; supports multiple instances per page.
+interface Props {
+  images: { src: string; alt: string }[];
+}
+const { images } = Astro.props;
+---
+
+<div data-lightbox>
+  <div class="grid grid-cols-2 items-start gap-5 lg:grid-cols-3">
+    {images.map((im, i) => (
+      <button
+        type="button"
+        data-lb-item
+        data-index={i}
+        class="block cursor-zoom-in overflow-hidden rounded-lg bg-sand focus:outline-none focus-visible:ring-2 focus-visible:ring-clay"
+      >
+        <img
+          src={im.src}
+          alt={im.alt}
+          loading="lazy"
+          class="w-full transition-transform duration-500 hover:scale-[1.03]"
+        />
+      </button>
+    ))}
+  </div>
+
+  <!-- data island: full-size sources + alts for the viewer -->
+  <script type="application/json" data-lb-data set:html={JSON.stringify(images)} />
+
+  <!-- Overlay -->
+  <div
+    data-lb-overlay
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-ink/95 p-4 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+  >
+    <button type="button" data-lb-close aria-label="Close" class="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-cream/15 text-2xl text-cream transition hover:bg-cream/30">×</button>
+    <button type="button" data-lb-prev aria-label="Previous" class="absolute left-3 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-cream/15 text-3xl text-cream transition hover:bg-cream/30 md:left-6">‹</button>
+    <button type="button" data-lb-next aria-label="Next" class="absolute right-3 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-cream/15 text-3xl text-cream transition hover:bg-cream/30 md:right-6">›</button>
+
+    <figure class="flex max-h-full max-w-full flex-col items-center">
+      <img data-lb-img src="" alt="" class="max-h-[82vh] max-w-[92vw] rounded-lg object-contain" />
+      <figcaption data-lb-counter class="mt-3 text-sm tracking-widest text-cream/70"></figcaption>
+    </figure>
+  </div>
+</div>
+
+<script>
+  function initLightbox(root: HTMLElement) {
+    const overlay = root.querySelector<HTMLElement>('[data-lb-overlay]');
+    const dataEl = root.querySelector<HTMLElement>('[data-lb-data]');
+    const imgEl = root.querySelector<HTMLImageElement>('[data-lb-img]');
+    const counter = root.querySelector<HTMLElement>('[data-lb-counter]');
+    if (!overlay || !dataEl || !imgEl) return;
+
+    const images: { src: string; alt: string }[] = JSON.parse(dataEl.textContent || '[]');
+    if (!images.length) return;
+
+    let current = 0;
+
+    const render = () => {
+      const im = images[current];
+      imgEl.src = im.src;
+      imgEl.alt = im.alt;
+      if (counter) counter.textContent = `${current + 1} / ${images.length}`;
+    };
+    const open = (i: number) => {
+      current = (i + images.length) % images.length;
+      render();
+      overlay.classList.remove('hidden');
+      overlay.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+      overlay.classList.add('hidden');
+      overlay.classList.remove('flex');
+      document.body.style.overflow = '';
+    };
+    const go = (delta: number) => { current = (current + delta + images.length) % images.length; render(); };
+
+    root.querySelectorAll<HTMLElement>('[data-lb-item]').forEach((btn) => {
+      btn.addEventListener('click', () => open(Number(btn.dataset.index)));
+    });
+    root.querySelector('[data-lb-close]')?.addEventListener('click', close);
+    root.querySelector('[data-lb-next]')?.addEventListener('click', () => go(1));
+    root.querySelector('[data-lb-prev]')?.addEventListener('click', () => go(-1));
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (overlay.classList.contains('hidden')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') go(1);
+      else if (e.key === 'ArrowLeft') go(-1);
+    });
+
+    // swipe on touch
+    let startX = 0;
+    overlay.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+    overlay.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-lightbox]').forEach(initLightbox);
+</script>

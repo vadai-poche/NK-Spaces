@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteSettings } from '../lib/content';
+const settings = await getSiteSettings();
+const telHref = `tel:${settings.phone.replace(/\s+/g, '')}`;
+const waHref = `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent("Hi NK Spaces, I'd like to discuss a project.")}`;
+---
+
+<Layout title="Contact" description={`Get in touch with ${settings.name} to discuss your project.`}>
+  <section class="container-x py-16 md:py-20">
+    <div class="grid gap-12 md:grid-cols-2">
+      <!-- Intro + quick contact -->
+      <div>
+        <p class="text-sm uppercase tracking-[0.25em] text-clay">Contact</p>
+        <h1 class="mt-3 text-4xl md:text-5xl">Let’s create something beautiful</h1>
+        <p class="mt-5 text-muted">
+          Tell us a little about your space and what you’re hoping to achieve. We’ll get back to you by email to take it from there.
+        </p>
+
+        <div class="mt-8 space-y-3 text-sm">
+          <a href={telHref} class="flex items-center gap-3 text-ink hover:text-clay">
+            <span class="uppercase tracking-widest text-muted">Call</span> {settings.phone}
+          </a>
+          <a href={`mailto:${settings.email}`} class="flex items-center gap-3 text-ink hover:text-clay">
+            <span class="uppercase tracking-widest text-muted">Email</span> {settings.email}
+          </a>
+          <a href={waHref} target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90">
+            Chat on WhatsApp
+          </a>
+        </div>
+        <p class="mt-8 text-sm text-muted">Serving {settings.serviceArea}</p>
+      </div>
+
+      <!-- Inquiry form (Netlify Forms) -->
+      <div class="rounded-2xl border border-sand bg-white/60 p-6 md:p-8">
+        <form
+          name="inquiry"
+          method="POST"
+          action="/thank-you"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          class="space-y-5"
+        >
+          <input type="hidden" name="form-name" value="inquiry" />
+          <p class="hidden">
+            <label>Don’t fill this out: <input name="bot-field" /></label>
+          </p>
+
+          <div>
+            <label class="mb-1 block text-sm text-ink" for="name">Name</label>
+            <input id="name" name="name" required class="w-full rounded-lg border border-sand bg-cream px-4 py-2.5 outline-none focus:border-clay" />
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label class="mb-1 block text-sm text-ink" for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" class="w-full rounded-lg border border-sand bg-cream px-4 py-2.5 outline-none focus:border-clay" />
+            </div>
+            <div>
+              <label class="mb-1 block text-sm text-ink" for="email">Email</label>
+              <input id="email" name="email" type="email" required class="w-full rounded-lg border border-sand bg-cream px-4 py-2.5 outline-none focus:border-clay" />
+            </div>
+          </div>
+
+          <div>
+            <label class="mb-1 block text-sm text-ink" for="projectType">Project type</label>
+            <select id="projectType" name="projectType" class="w-full rounded-lg border border-sand bg-cream px-4 py-2.5 outline-none focus:border-clay">
+              <option>Full home</option>
+              <option>Single room</option>
+              <option>Renovation / makeover</option>
+              <option>Styling &amp; décor</option>
+              <option>Commercial space</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="mb-1 block text-sm text-ink" for="message">Tell us about your project</label>
+            <textarea id="message" name="message" rows="4" class="w-full rounded-lg border border-sand bg-cream px-4 py-2.5 outline-none focus:border-clay"></textarea>
+          </div>
+
+          <button type="submit" class="w-full rounded-full bg-ink px-6 py-3 text-sm uppercase tracking-widest text-cream transition hover:bg-clay-dark">
+            Send enquiry
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>

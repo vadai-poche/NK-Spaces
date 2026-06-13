@@ -1,0 +1,23 @@
+---
+import type { Project } from '../lib/types';
+interface Props { project: Project; }
+const { project } = Astro.props;
+const cover = typeof project.coverImage === 'string' ? project.coverImage : '';
+---
+
+<a href={`/projects/${project.slug}`} class="group block">
+  <div class="aspect-[4/5] overflow-hidden rounded-lg bg-sand">
+    <img
+      src={cover}
+      alt={`${project.title} cover`}
+      loading="lazy"
+      class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+    />
+  </div>
+  <div class="mt-4">
+    <h3 class="font-serif text-xl text-ink">{project.title}</h3>
+    <p class="mt-1 text-sm uppercase tracking-widest text-muted">
+      {[project.category, project.location, project.year].filter(Boolean).join(' · ')}
+    </p>
+  </div>
+</a>

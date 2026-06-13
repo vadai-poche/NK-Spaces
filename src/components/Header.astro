@@ -1,0 +1,69 @@
+---
+import { getSiteSettings } from '../lib/content';
+const settings = await getSiteSettings();
+const { pathname } = Astro.url;
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/resin-art', label: 'Resin Art' },
+  { href: '/paintings', label: 'Paintings' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+const isActive = (href: string) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href);
+---
+
+<header class="sticky top-0 z-50 border-b border-sand/70 bg-cream/85 backdrop-blur">
+  <nav class="container-x flex items-center justify-between py-4">
+    <a href="/" class="flex items-center" aria-label={settings.name}>
+      <img src="/logo.webp" alt={settings.name} class="h-12 w-auto md:h-14" />
+    </a>
+
+    <ul class="hidden items-center gap-8 md:flex">
+      {links.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={[
+              'text-sm uppercase tracking-widest transition-colors hover:text-clay',
+              isActive(link.href) ? 'text-clay' : 'text-muted',
+            ]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <a
+      href="/contact"
+      class="hidden rounded-full bg-ink px-5 py-2 text-sm text-cream transition-colors hover:bg-clay-dark md:inline-block"
+    >
+      Enquire
+    </a>
+
+    <!-- Mobile menu (CSS-only toggle) -->
+    <details class="relative md:hidden">
+      <summary class="cursor-pointer list-none p-2 text-ink [&::-webkit-details-marker]:hidden">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </summary>
+      <ul class="absolute right-0 mt-2 w-48 rounded-lg border border-sand bg-cream p-2 shadow-lg">
+        {links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="block rounded px-3 py-2 text-sm uppercase tracking-widest text-muted hover:bg-sand hover:text-ink"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </details>
+  </nav>
+</header>

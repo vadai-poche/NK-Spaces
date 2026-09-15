@@ -507,7 +507,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 </div>
 
 <script>
-const DATA = /*DATA_JSON*/[];
+const DATA = /*DATA_JSON*/;
 const UPDATED = "/*UPDATED*/";
 document.getElementById("last-updated").textContent = "Updated: " + UPDATED;
 

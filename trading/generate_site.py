@@ -688,7 +688,7 @@ function openModal(id){
         labels:snapLabels,
         datasets:[
           {label:"GMP %",
-           data:snaps.map(s=>s.gmp_pct),
+           data:snaps.map(s=>s.snap==="listing"?null:s.gmp_pct),
            backgroundColor:snaps.map(s=>s.gmp_pct>=0?"rgba(27,175,122,.75)":"rgba(227,73,72,.75)"),
            borderRadius:4},
           {label:"Listing %",

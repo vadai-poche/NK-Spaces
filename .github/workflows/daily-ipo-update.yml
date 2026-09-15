@@ -6,6 +6,10 @@ on:
     - cron: '30 10 * * *'  # 4:00 PM IST
   workflow_dispatch:
 
+# Allow the workflow's GITHUB_TOKEN to push the generated files back to the repo.
+permissions:
+  contents: write
+
 jobs:
   update:
     runs-on: ubuntu-latest

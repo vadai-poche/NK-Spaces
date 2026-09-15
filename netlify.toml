@@ -1,8 +1,7 @@
 [build]
-  # Build the Astro site, then drop the self-contained IPO tracker page into the
-  # published folder so it is served at nkspaces.in/trading/ (it lives at the repo
-  # root, outside Astro's build, so Netlify wouldn't include it otherwise).
-  command = "npm run build && mkdir -p dist/trading && cp trading/index.html dist/trading/"
+  # The IPO tracker is served from its own site at ipo.nkspaces.in (base=trading),
+  # so the marketing site only builds the Astro output.
+  command = "npm run build"
   publish = "dist"
 
 [build.environment]

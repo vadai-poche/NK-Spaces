@@ -1,0 +1,10 @@
+# Config for the dedicated IPO tracker site (ipo.nkspaces.in).
+# That Netlify site uses base directory = "trading", so Netlify reads THIS file
+# instead of the repo-root netlify.toml (which builds the Astro marketing site).
+#
+# index.html is pre-generated and committed by the daily GitHub Action, so there
+# is nothing to build — just publish this folder as-is.
+
+[build]
+  command = "echo 'IPO tracker: static, no build step'"
+  publish = "."

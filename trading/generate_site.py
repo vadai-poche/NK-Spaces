@@ -255,7 +255,8 @@ def auto_listing_prices(df_master: pd.DataFrame, df_updates: pd.DataFrame) -> Tu
     today_s = date.today().isoformat()
     log: List[str] = []
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    listed = df_master[df_master["Listing_Date"].astype(str).str.strip() == today_s]
+    # Match on explicit Listing_Date OR computed Close + 6
+    listed = df_master[df_master.apply(lambda r: _listing_date(r) == today_s, axis=1)]
     for _, row in listed.iterrows():
         ipo_id = row["IPO_ID"]
         already = df_updates[
@@ -389,6 +390,19 @@ def _latest_lp(ipo_id: str, df_upd: pd.DataFrame) -> str:
     if rows.empty: return ""
     return rows.sort_values("Recorded_At").iloc[-1]["Listing_Price"]
 
+def _listing_date(row) -> str:
+    """Return explicit listing date or compute Close + 6 days (SEBI T+6 rule)."""
+    ld = _cd(row.get("Listing_Date", ""))
+    if ld:
+        return ld
+    cd = _cd(row.get("Close_Date", ""))
+    if not cd:
+        return ""
+    try:
+        return (date.fromisoformat(cd) + timedelta(days=6)).isoformat()
+    except:
+        return ""
+
 def build_ipo_json(df_master: pd.DataFrame, df_updates: pd.DataFrame) -> list:
     """Build a list of dicts for each IPO to embed as JSON in the page."""
     ipos = []
@@ -439,7 +453,7 @@ def build_ipo_json(df_master: pd.DataFrame, df_updates: pd.DataFrame) -> list:
                           if m["Price_High"] and m["Lot_Size"] else "—",
             "issue_size": f"₹{m['Issue_Size_Cr']} Cr" if m["Issue_Size_Cr"] else "—",
             "open": m["Open_Date"], "close": m["Close_Date"],
-            "listing_date": m.get("Listing_Date",""),
+            "listing_date": _listing_date(m),
             "retail": _fmt_x(upd_snap.get("Retail_Sub","")),
             "hni":    _fmt_x(upd_snap.get("HNI_Sub","")),
             "qib":    _fmt_x(upd_snap.get("QIB_Sub","")),

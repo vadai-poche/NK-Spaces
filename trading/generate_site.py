@@ -326,6 +326,14 @@ def update_master(df_master: pd.DataFrame, df_updates: pd.DataFrame, year: int) 
         snap   = _phase(m_row)
         sub    = sub_data.get(name, {})
         gmp    = info.get("gmp","")
+        # Don't insert a listing row if LP already exists — auto_listing_prices handles that
+        if snap == "listing":
+            has_lp = not df_updates[
+                (df_updates["IPO_ID"]==ipo_id) & (df_updates["Snapshot"]=="listing") &
+                (df_updates["Listing_Price"].astype(str).str.strip().isin(["","0"])==False)
+            ].empty
+            if has_lp:
+                continue
         if sub or gmp:
             df_updates = pd.concat([df_updates, pd.DataFrame([{
                 "IPO_ID":ipo_id,"Snapshot":snap,"Recorded_At":now,
@@ -396,7 +404,14 @@ def build_ipo_json(df_master: pd.DataFrame, df_updates: pd.DataFrame) -> list:
         for snap in SNAPSHOTS:
             rows = df_updates[(df_updates["IPO_ID"]==m["IPO_ID"])&(df_updates["Snapshot"]==snap)]
             if rows.empty: continue
-            r = rows.sort_values("Recorded_At").iloc[-1]
+            # For listing snapshot: prefer row with actual LP; skip if none has LP
+            if snap == "listing":
+                lp_rows = rows[rows["Listing_Price"].astype(str).str.strip().isin(["","0"])==False]
+                if lp_rows.empty:
+                    continue
+                r = lp_rows.sort_values("Recorded_At").iloc[-1]
+            else:
+                r = rows.sort_values("Recorded_At").iloc[-1]
             history.append({
                 "snap": snap,
                 "label": SNAP_LABEL.get(snap, snap),
@@ -507,7 +522,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 </div>
 
 <script>
-const DATA = /*DATA_JSON*/;
+const DATA = /*DATA_JSON*/[];
 const UPDATED = "/*UPDATED*/";
 document.getElementById("last-updated").textContent = "Updated: " + UPDATED;
 

@@ -496,7 +496,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .chart-wrap{position:relative;height:250px;margin-bottom:12px;}
   .chart-title{font-size:.8rem;font-weight:600;color:var(--sub);margin-bottom:6px;}
   .empty{text-align:center;padding:40px;color:var(--sub);}
-  @media(max-width:600px){th:nth-child(n+7),td:nth-child(n+7){display:none;}}
+  @media(max-width:600px){th:nth-child(n+6),td:nth-child(n+6){display:none;}}
 </style>
 </head>
 <body>
@@ -522,7 +522,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 </div>
 
 <script>
-const DATA = /*DATA_JSON*/;
+const DATA = /*DATA_JSON*/[];
 const UPDATED = "/*UPDATED*/";
 document.getElementById("last-updated").textContent = "Updated: " + UPDATED;
 
@@ -556,8 +556,7 @@ function renderTable(type){
   const el = document.getElementById("table-"+type);
   if(!rows.length){el.innerHTML='<div class="empty">No IPOs for this filter.</div>';return;}
   let html = `<table><thead><tr>
-    <th>Status</th><th>Company</th><th>Price Band</th><th>Lot</th>
-    <th>Min Invest</th><th>Open</th><th>Close</th>
+    <th>Status</th><th>Company</th><th>Price Band</th><th>Open</th><th>Close</th><th>Listing</th>
     <th>Retail</th><th>HNI</th><th>QIB</th><th>Total</th>
     <th>GMP</th><th>Listing Price</th>
   </tr></thead><tbody>`;
@@ -566,9 +565,7 @@ function renderTable(type){
       <td><span class="badge ${badgeClass(r.phase)}">${r.phase_icon} ${r.phase_label}</span></td>
       <td><b>${r.name}</b></td>
       <td>${r.price_band}</td>
-      <td>${r.lot_size}</td>
-      <td>${r.min_invest}</td>
-      <td>${r.open}</td><td>${r.close}</td>
+      <td>${r.open}</td><td>${r.close}</td><td>${r.listing_date||"—"}</td>
       <td>${subDisplay(r.retail)}</td>
       <td>${subDisplay(r.hni)}</td>
       <td>${subDisplay(r.qib)}</td>

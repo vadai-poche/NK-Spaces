@@ -1,5 +1,5 @@
 IPO_ID,Name,Type,Exchange,Price_Low,Price_High,Lot_Size,Open_Date,Close_Date,Listing_Date,Issue_Size_Cr
-1,A-One Steels,Mainboard,NSE+BSE,,,,2026-09-24,2026-09-28,,
+1,A-One Steels,Mainboard,NSE+BSE,405,405,,2026-09-24,2026-09-28,,
 2,Sonaselection India,Mainboard,NSE+BSE,99,99,,2026-09-17,2026-09-21,,
 3,NSE,Mainboard,NSE+BSE,1785,1785,,2026-09-17,2026-09-21,,
 4,Hero Motors,Mainboard,NSE+BSE,84,84,,2026-09-16,2026-09-18,,
@@ -170,3 +170,9 @@ IPO_ID,Name,Type,Exchange,Price_Low,Price_High,Lot_Size,Open_Date,Close_Date,Lis
 169,Modern Diagnostic,SME,BSE SME,85,90,,2026-01-31,2026-01-02,,37
 170,Himalaya Nutravedics,SME,BSE SME,100,106,,2026-09-22,2026-09-24,,26.50.
 171,Vivekanand Cotspin,SME,BSE SME,32,37,,2026-09-21,2026-09-23,,24.05.
+172,ArMee Infotech,Mainboard,NSE+BSE,,,,2026-09-23,2026-09-25,,
+173,Varmora Granito,Mainboard,NSE+BSE,148,148,,2026-09-22,2026-09-24,,
+174,Liqvd Digital,SME,BSE SME,[.],[.],,2026-09-23,2026-09-25,,..
+175,Sai Urja Indo Ventures,SME,NSE SME,113,113,,2026-09-23,2026-09-25,,
+176,Anand Seamless,SME,BSE SME,72,72,,2026-09-22,2026-09-24,,25.52.
+177,Sai Urja,SME,BSE SME,107,113,,2026-09-23,2026-09-25,,24.95.

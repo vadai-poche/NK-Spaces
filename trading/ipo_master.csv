@@ -188,3 +188,9 @@ IPO_ID,Name,Type,Exchange,Price_Low,Price_High,Lot_Size,Open_Date,Close_Date,Lis
 187,Green Asia Impex,SME,NSE SME,85,90,,2026-09-24,2026-09-28,,60.10.
 188,Peshwa Wheat,SME,BSE SME,95,101,,2026-09-24,2026-09-28,,53.52.
 189,Roopa Screen,SME,BSE SME,60,64,,2026-09-24,2026-09-28,,19.20.
+190,Acevector,Mainboard,NSE+BSE,,,,2026-09-25,2026-09-29,,
+191,German Green Steel,Mainboard,NSE+BSE,139,139,,2026-09-25,2026-09-29,,
+192,Runwal Enterprises,Mainboard,NSE+BSE,305,305,,2026-09-25,2026-09-29,,
+193,Orient Cables,Mainboard,NSE+BSE,272,272,,2026-09-25,2026-09-29,,
+194,Pind Hospitality,SME,BSE SME,93,99,,2026-09-28,2026-09-30,,17.82.
+195,Dudani Retail,SME,BSE SME,29,29,,2026-09-25,2026-09-29,,11.00.

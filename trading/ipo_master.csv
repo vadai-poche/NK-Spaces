@@ -325,3 +325,5 @@ IPO_ID,Name,Type,Exchange,Price_Low,Price_High,Lot_Size,Open_Date,Close_Date,Lis
 324,Vaibhav Vyapaar,SME,NSE SME,50,52,,2026-10-13,2026-10-15,,40.54.
 325,Ravita Engineering,SME,NSE SME,105,112,,2026-10-13,2026-10-15,,116.05.
 326,Fusion CXUpcoming,Mainboard,NSE+BSE,289,289,,2026-10-14,2026-10-16,,
+327,Zetwerk ManufacturingUpcoming,Mainboard,NSE+BSE,,,,2026-10-15,2026-10-19,,
+328,Bonfiglioli TransmissionsUpcoming,Mainboard,NSE+BSE,,,,2026-10-15,2026-10-19,,

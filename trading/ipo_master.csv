@@ -326,6 +326,9 @@ IPO_ID,Name,Type,Exchange,Price_Low,Price_High,Lot_Size,Open_Date,Close_Date,Lis
 325,Ravita Engineering,SME,NSE SME,105,112,,2026-10-13,2026-10-15,,116.05.
 326,Fusion CXUpcoming,Mainboard,NSE+BSE,289,289,,2026-10-14,2026-10-16,,
 327,Zetwerk ManufacturingUpcoming,Mainboard,NSE+BSE,,,,2026-10-15,2026-10-19,,
-328,Bonfiglioli TransmissionsUpcoming,Mainboard,NSE+BSE,,,,2026-10-15,2026-10-19,,
-329,Tonbo ImagingUpcoming,Mainboard,NSE+BSE,,,,,,,
-330,Sahajanand MedicalUpcoming,Mainboard,NSE+BSE,,,,2026-10-15,2026-10-19,,
+328,Bonfiglioli TransmissionsUpcoming,Mainboard,NSE+BSE,586,586,,2026-10-15,2026-10-19,,
+329,Tonbo ImagingUpcoming,Mainboard,NSE+BSE,700,700,,2026-10-15,2026-10-19,,
+330,Sahajanand MedicalUpcoming,Mainboard,NSE+BSE,344,344,,2026-10-15,2026-10-19,,
+331,ZetwerkUpcoming,Mainboard,NSE+BSE,151,151,,2026-10-15,2026-10-19,,
+332,Shellz IndiaUpcoming,SME,NSE SME,179,179,,2026-10-15,2026-10-19,,
+333,Shellz India,SME,BSE SME,170,179,,2026-10-15,2026-10-19,,60.

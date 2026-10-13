@@ -334,3 +334,5 @@ IPO_ID,Name,Type,Exchange,Price_Low,Price_High,Lot_Size,Open_Date,Close_Date,Lis
 333,Shellz India,SME,BSE SME,170,179,,2026-10-15,2026-10-19,,60.
 334,HD Fire Protect(O),Mainboard,NSE+BSE,271,271,,2026-10-13,2026-10-15,,
 335,Vaibhav Vyapaar(O),SME,NSE SME,52,52,,2026-10-13,2026-10-15,,
+336,HD Fire ProtectOpen,Mainboard,NSE+BSE,271,271,,2026-10-13,2026-10-15,,
+337,Vaibhav VyapaarOpen,SME,NSE SME,52,52,,2026-10-13,2026-10-15,,

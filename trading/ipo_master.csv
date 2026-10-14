@@ -338,3 +338,4 @@ IPO_ID,Name,Type,Exchange,Price_Low,Price_High,Lot_Size,Open_Date,Close_Date,Lis
 337,Vaibhav VyapaarOpen,SME,NSE SME,52,52,,2026-10-13,2026-10-15,,
 338,Fusion CXOpen,Mainboard,NSE+BSE,289,289,,2026-10-14,2026-10-16,,
 339,Ravita EngineeringOpen,SME,NSE SME,112,112,,2026-10-14,2026-10-16,,
+340,Paras HealthcareUpcoming,Mainboard,NSE+BSE,,,,2026-10-21,2026-10-23,,

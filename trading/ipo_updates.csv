@@ -9610,3 +9610,14 @@ IPO_ID,Snapshot,Recorded_At,Retail_Sub,HNI_Sub,QIB_Sub,Total_Sub,GMP,Listing_Pri
 165,final,2026-10-14 15:21:04,101.28,160.95,71.09,105.54,,,auto-fetched
 166,final,2026-10-14 15:21:04,0.99,0.91,0.0,0.95,,,auto-fetched
 167,final,2026-10-14 15:21:04,1.51,0.91,1.03,1.33,,,auto-fetched
+317,pre-apply,2026-10-15 08:27:50,,,,,220,,auto-fetched
+340,pre-apply,2026-10-15 08:27:50,,,,,85,,auto-fetched
+341,day1,2026-10-15 08:27:50,,,,,180,,auto-fetched
+342,day1,2026-10-15 08:27:50,,,,,500,,auto-fetched
+343,day1,2026-10-15 08:27:50,,,,,23,,auto-fetched
+344,day1,2026-10-15 08:27:50,,,,,42,,auto-fetched
+338,day2,2026-10-15 08:27:50,,,,,34,,auto-fetched
+336,day3,2026-10-15 08:27:50,,,,,91,,auto-fetched
+345,day1,2026-10-15 08:27:50,,,,,0,,auto-fetched
+339,day2,2026-10-15 08:27:50,,,,,7,,auto-fetched
+337,day3,2026-10-15 08:27:50,,,,,0,,auto-fetched

@@ -344,3 +344,8 @@ IPO_ID,Name,Type,Exchange,Price_Low,Price_High,Lot_Size,Open_Date,Close_Date,Lis
 343,ZetwerkOpen,Mainboard,NSE+BSE,151,151,,2026-10-15,2026-10-19,,
 344,Sahajanand MedicalOpen,Mainboard,NSE+BSE,344,344,,2026-10-15,2026-10-19,,
 345,Shellz IndiaOpen,SME,NSE SME,179,179,,2026-10-15,2026-10-19,,
+346,BLS PolymersUpcoming,Mainboard,NSE+BSE,150,150,,2026-10-27,2026-10-29,,
+347,Fusion CXClosed,Mainboard,NSE+BSE,289,289,,2026-10-14,2026-10-16,,
+348,HD Fire ProtectClosed,Mainboard,NSE+BSE,271,271,,2026-10-13,2026-10-15,,
+349,Ravita EngineeringClosed,SME,NSE SME,112,112,,2026-10-14,2026-10-16,,
+350,Vaibhav VyapaarClosed,SME,NSE SME,54,54,,2026-10-13,2026-10-15,,

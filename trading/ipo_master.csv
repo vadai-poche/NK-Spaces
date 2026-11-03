@@ -400,3 +400,5 @@ IPO_ID,Name,Type,Exchange,Price_Low,Price_High,Lot_Size,Open_Date,Close_Date,Lis
 399,Ajwa ProjectsClosed,SME,NSE SME,203,203,,2026-10-28,2026-10-30,,
 400,Carver RoboweldClosed,SME,NSE SME,80,80,,2026-10-28,2026-10-30,,
 401,Vedant Poly FabsOpen,SME,NSE SME,94,94,,2026-11-02,2026-11-04,,
+402,Bombay Coated and Special SteelsClosed,Mainboard,NSE+BSE,82,82,,2026-11-29,2026-11-02,,
+403,Antala IndustriesClosed,SME,NSE SME,67,67,,2026-11-29,2026-11-02,,

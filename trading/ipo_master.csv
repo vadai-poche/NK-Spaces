@@ -402,3 +402,7 @@ IPO_ID,Name,Type,Exchange,Price_Low,Price_High,Lot_Size,Open_Date,Close_Date,Lis
 401,Vedant Poly FabsOpen,SME,NSE SME,94,94,,2026-11-02,2026-11-04,,
 402,Bombay Coated and Special SteelsClosed,Mainboard,NSE+BSE,82,82,,2026-11-29,2026-11-02,,
 403,Antala IndustriesClosed,SME,NSE SME,67,67,,2026-11-29,2026-11-02,,
+404,Johnsoncab ElectricalsClosed,SME,NSE SME,200,200,,2026-11-30,2026-11-03,,
+405,HGS (India)Closed,SME,NSE SME,120,120,,2026-11-30,2026-11-03,,
+406,Maxwell EngineeringClosed,SME,NSE SME,158,158,,2026-11-30,2026-11-03,,
+407,Vectras EnproconClosed,SME,NSE SME,105,105,,2026-11-30,2026-11-03,,

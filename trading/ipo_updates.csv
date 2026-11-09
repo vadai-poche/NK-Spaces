@@ -13780,3 +13780,7 @@ IPO_ID,Snapshot,Recorded_At,Retail_Sub,HNI_Sub,QIB_Sub,Total_Sub,GMP,Listing_Pri
 165,final,2026-11-06 11:12:22,101.28,160.95,71.09,105.54,,,auto-fetched
 166,final,2026-11-06 11:12:22,0.99,0.91,0.0,0.95,,,auto-fetched
 167,final,2026-11-06 11:12:22,1.51,0.91,1.03,1.33,,,auto-fetched
+376,listing,2026-11-09 11:53:07,,,,,,351.0,auto-yahoo-HGS
+386,listing,2026-11-09 11:53:07,,,,,,351.0,auto-yahoo-HGS
+394,listing,2026-11-09 11:53:07,,,,,,351.0,auto-yahoo-HGS
+405,listing,2026-11-09 11:53:07,,,,,,351.0,auto-yahoo-HGS
